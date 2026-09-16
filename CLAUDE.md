@@ -17,7 +17,7 @@ layer, instead of the `make:*` ones.
 ## Install, run, test
 
 Everything runs through Laravel Sail. Two services: `laravel.test` (PHP 8.4)
-and `pgsql` (PostgreSQL 18).
+and `mysql` (MySQL 8.4).
 
 ```sh
 composer install
@@ -30,7 +30,7 @@ cp .env.example .env
 ```
 
 Run every `artisan`, `composer` and test command through `./vendor/bin/sail`,
-never on the host. Tests hit the `testing` database the `pgsql` service creates
+never on the host. Tests hit the `testing` database the `mysql` service creates
 on first boot.
 
 ## Commits
