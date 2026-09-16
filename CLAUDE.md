@@ -16,14 +16,22 @@ layer, instead of the `make:*` ones.
 
 ## Install, run, test
 
+Everything runs through Laravel Sail. Two services: `laravel.test` (PHP 8.4)
+and `pgsql` (PostgreSQL 18).
+
 ```sh
 composer install
-cp .env.example .env && php artisan key:generate
-touch storage/database.sqlite && php artisan migrate
-./vendor/bin/phpunit
+cp .env.example .env
+./vendor/bin/sail up -d
+./vendor/bin/sail artisan key:generate
+./vendor/bin/sail artisan migrate
+./vendor/bin/sail test
+./vendor/bin/sail down
 ```
 
-Local database is SQLite at `storage/database.sqlite` (`DB_DATABASE` in `.env`).
+Run every `artisan`, `composer` and test command through `./vendor/bin/sail`,
+never on the host. Tests hit the `testing` database the `pgsql` service creates
+on first boot.
 
 ## Commits
 
