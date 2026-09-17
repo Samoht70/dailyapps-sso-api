@@ -10,6 +10,7 @@ use Illuminate\Auth\Events\Login as LoginEvent;
 use Illuminate\Auth\Events\PasswordResetLinkSent;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
 use Laravel\Passport\Bridge\AccessTokenRepository as PassportAccessTokenRepository;
@@ -28,11 +29,11 @@ use Technical\Oidc\Http\Middleware\EnforceSsoSessionLifetime;
 use Technical\Oidc\Listeners\OpenSsoSession;
 use Technical\Oidc\Listeners\RecordAuthenticationEvents;
 use Technical\Oidc\Listeners\RecordSessionParticipant;
+use Technical\Oidc\Listeners\WatchLatencyBudget;
 use Technical\Oidc\Livewire\AcceptInvitation;
 use Technical\Oidc\Livewire\Account;
 use Technical\Oidc\Livewire\ForgotPassword;
 use Technical\Oidc\Livewire\Login;
-use Technical\Oidc\Livewire\PingCounter;
 use Technical\Oidc\Livewire\ResetPassword;
 use Technical\Oidc\Models\Client;
 use Xefi\LaravelOSDD\LayerServiceProvider;
@@ -58,6 +59,7 @@ class OidcServiceProvider extends LayerServiceProvider
 
         $this->withRouting(
             web: __DIR__.'/../../routes/web.php',
+            commands: __DIR__.'/../../routes/console.php',
         );
     }
 
@@ -67,6 +69,8 @@ class OidcServiceProvider extends LayerServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../../config/openid.php', 'openid');
         $this->mergeConfigFrom(__DIR__.'/../../config/oidc.php', 'oidc');
         $this->overrideConfigFrom(__DIR__.'/../../config/auth.php', 'auth');
+
+        config(['openid.token_headers.kid' => $this->signingKeyId()]);
 
         $this->app->singleton(ClaimsRegistry::class);
         $this->app->singleton(CurrentSsoSession::class);
@@ -80,9 +84,24 @@ class OidcServiceProvider extends LayerServiceProvider
             ->give(fn (): StatefulGuard => Auth::guard(config('passport.guard')));
     }
 
+    /**
+     * A key identifier the id_token header and the JWKS agree on, derived from
+     * the public key itself — rotate the key and the identifier follows, so an
+     * application never verifies against a key that is no longer in use.
+     */
+    private function signingKeyId(): string
+    {
+        static $keyId;
+
+        return $keyId ??= substr(
+            hash('sha256', (string) file_get_contents(Passport::keyPath('oauth-public.key'))),
+            0,
+            32,
+        );
+    }
+
     private function registerScreens(): void
     {
-        Livewire::component('oidc.ping-counter', PingCounter::class);
         Livewire::component('oidc.login', Login::class);
         Livewire::component('oidc.forgot-password', ForgotPassword::class);
         Livewire::component('oidc.reset-password', ResetPassword::class);
@@ -120,5 +139,6 @@ class OidcServiceProvider extends LayerServiceProvider
         Event::listen(PasswordChanged::class, CloseSessionsOnPasswordChange::class);
         Event::listen(PasswordChanged::class, [RecordAuthenticationEvents::class, 'handlePasswordChanged']);
         Event::listen(ApplicationEnteredSession::class, RecordSessionParticipant::class);
+        Event::listen(RequestHandled::class, WatchLatencyBudget::class);
     }
 }

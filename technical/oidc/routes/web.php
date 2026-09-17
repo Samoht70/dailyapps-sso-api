@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Technical\Oidc\Http\Controllers\DiscoveryController;
 use Technical\Oidc\Http\Controllers\LogoutController;
 use Technical\Oidc\Livewire\AcceptInvitation;
 use Technical\Oidc\Livewire\Account;
@@ -8,7 +9,7 @@ use Technical\Oidc\Livewire\ForgotPassword;
 use Technical\Oidc\Livewire\Login;
 use Technical\Oidc\Livewire\ResetPassword;
 
-Route::view('/oidc/ping', 'oidc::ping')->name('oidc.ping');
+Route::get('/.well-known/openid-configuration', DiscoveryController::class)->name('openid.discovery');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', Login::class)->name('login');

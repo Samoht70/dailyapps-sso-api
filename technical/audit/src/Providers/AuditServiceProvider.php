@@ -18,6 +18,7 @@ class AuditServiceProvider extends LayerServiceProvider
 
         $this->withRouting(
             api: __DIR__.'/../../routes/api.php',
+            commands: __DIR__.'/../../routes/console.php',
             apiPrefix: '',
         );
     }

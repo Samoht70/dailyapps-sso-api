@@ -25,6 +25,9 @@
     <testsuite name="technical/permissions">
       <directory>technical/permissions/tests</directory>
     </testsuite>
+    <testsuite name="technical/framework">
+      <directory>technical/framework/tests</directory>
+    </testsuite>
   </testsuites>
   <source>
     <include>

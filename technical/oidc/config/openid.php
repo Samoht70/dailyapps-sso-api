@@ -53,7 +53,7 @@ return [
          * When set to true, this package will expose the OpenID Connect Discovery endpoint.
          *  - /.well-known/openid-configuration
          */
-        'discovery' => true,
+        'discovery' => false,
         /**
          * When set to true, this package will expose the JSON Web Key Set endpoint.
          */

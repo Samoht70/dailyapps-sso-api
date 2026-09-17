@@ -6,7 +6,7 @@ use Functional\Users\Rest\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 use Lomkit\Rest\Facades\Rest;
 
-Route::middleware('auth:api')->group(function (): void {
+Route::middleware(['auth:api', 'throttle:api'])->group(function (): void {
     Route::get('/me', [ProfileController::class, 'show'])->name('me.show');
     Route::patch('/me', [ProfileController::class, 'update'])->name('me.update');
     Route::put('/me/password', [ProfileController::class, 'updatePassword'])->name('me.password');
