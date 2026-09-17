@@ -2,6 +2,8 @@
 
 namespace Functional\Catalog\Providers;
 
+use Functional\Catalog\Listeners\DetachRolesOnApplicationRoleDeleting;
+use Functional\Catalog\Models\ApplicationRole;
 use Functional\Catalog\Rest\Controls\ApplicationControl;
 use Functional\Catalog\Rest\Controls\ApplicationRoleControl;
 use Lomkit\Access\Access;
@@ -16,6 +18,8 @@ class CatalogServiceProvider extends LayerServiceProvider
         }
 
         (new Access)->addControls([new ApplicationControl, new ApplicationRoleControl]);
+
+        ApplicationRole::deleting(app(DetachRolesOnApplicationRoleDeleting::class)->handle(...));
 
         $this->withRouting(
             api: __DIR__.'/../../routes/api.php',

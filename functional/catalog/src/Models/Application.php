@@ -11,6 +11,7 @@ use Functional\Licensing\Models\License;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Attributes\UsePolicy;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -33,6 +34,18 @@ class Application extends Model
     protected $attributes = [
         'status' => ApplicationStatus::Draft->value,
     ];
+
+    /**
+     * Read through to the Passport client, which is what actually enforces the
+     * return addresses. Copying them here would only guarantee that one day the
+     * two lists disagree.
+     *
+     * @return Attribute<list<string>, never>
+     */
+    protected function redirectUris(): Attribute
+    {
+        return Attribute::get(fn (): array => $this->oauthClient?->redirect_uris ?? []);
+    }
 
     public function receivesLogoutPush(): bool
     {
