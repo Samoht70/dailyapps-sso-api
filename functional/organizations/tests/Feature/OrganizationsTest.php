@@ -2,17 +2,32 @@
 
 namespace Functional\Organizations\Tests\Feature;
 
+use Functional\Organizations\Models\Organization;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class OrganizationsTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
-    {
-        $response = $this->get('/');
+    use RefreshDatabase;
 
-        $response->assertStatus(200);
+    #[Test]
+    public function it_gives_an_organization_a_uuid_primary_key(): void
+    {
+        $organization = Organization::factory()->create();
+
+        $this->assertMatchesRegularExpression(
+            '/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/',
+            $organization->id,
+        );
+    }
+
+    #[Test]
+    public function it_keeps_uuids_time_ordered(): void
+    {
+        $first = Organization::factory()->create()->id;
+        $second = Organization::factory()->create()->id;
+
+        $this->assertLessThan($second, $first);
     }
 }
