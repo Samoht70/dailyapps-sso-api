@@ -45,4 +45,32 @@ return [
 
     'connection' => env('PASSPORT_CONNECTION'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Token Lifetimes
+    |--------------------------------------------------------------------------
+    |
+    | Short-lived access tokens are what makes a revocation effective within the
+    | minute the product promises. The refresh token rotates on every use, so a
+    | stolen one is usable once at most before its family is revoked.
+    |
+    */
+
+    'access_token_minutes' => (int) env('PASSPORT_ACCESS_TOKEN_MINUTES', 15),
+
+    'refresh_token_hours' => (int) env('PASSPORT_REFRESH_TOKEN_HOURS', 8),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Proof Key for Code Exchange
+    |--------------------------------------------------------------------------
+    |
+    | The OAuth2 server only requires PKCE of public clients. Here it is required
+    | of every client, confidential ones included, and only the S256 challenge
+    | method is accepted — "plain" proves nothing.
+    |
+    */
+
+    'code_challenge_method' => 'S256',
+
 ];

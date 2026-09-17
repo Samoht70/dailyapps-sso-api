@@ -2,7 +2,6 @@
 
 namespace Technical\Audit\Providers;
 
-use Technical\Audit\Database\Seeders\AuditSeeder;
 use Xefi\LaravelOSDD\LayerServiceProvider;
 
 class AuditServiceProvider extends LayerServiceProvider
@@ -11,7 +10,6 @@ class AuditServiceProvider extends LayerServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
-            $this->loadSeeders([AuditSeeder::class]);
         }
 
         $this->withRouting(

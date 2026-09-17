@@ -11,7 +11,7 @@ class OrganizationsServiceProvider extends LayerServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
-            $this->loadSeeders([OrganizationsSeeder::class]);
+            $this->loadSeeders([OrganizationsSeeder::class], priority: 10);
         }
 
         $this->withRouting(

@@ -2,7 +2,6 @@
 
 namespace Functional\Catalog\Providers;
 
-use Functional\Catalog\Database\Seeders\CatalogSeeder;
 use Xefi\LaravelOSDD\LayerServiceProvider;
 
 class CatalogServiceProvider extends LayerServiceProvider
@@ -11,7 +10,6 @@ class CatalogServiceProvider extends LayerServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
-            $this->loadSeeders([CatalogSeeder::class]);
         }
 
         $this->withRouting(

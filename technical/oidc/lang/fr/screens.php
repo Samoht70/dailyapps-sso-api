@@ -1,0 +1,52 @@
+<?php
+
+return [
+    'login' => [
+        'title' => 'Connexion',
+        'heading' => 'Connectez-vous',
+        'email' => 'Adresse électronique',
+        'password' => 'Mot de passe',
+        'remember' => 'Rester connecté',
+        'submit' => 'Se connecter',
+        'forgot' => 'Mot de passe oublié ?',
+    ],
+    'forgot_password' => [
+        'title' => 'Mot de passe oublié',
+        'heading' => 'Réinitialiser votre mot de passe',
+        'email' => 'Adresse électronique',
+        'submit' => 'Envoyer le lien',
+        'sent' => 'Si un compte correspond à cette adresse, un lien de réinitialisation vient d\'être envoyé.',
+        'back' => 'Revenir à la connexion',
+    ],
+    'reset_password' => [
+        'title' => 'Nouveau mot de passe',
+        'heading' => 'Choisissez un nouveau mot de passe',
+        'password' => 'Nouveau mot de passe',
+        'confirmation' => 'Confirmation',
+        'submit' => 'Enregistrer',
+        'invalid' => 'Ce lien de réinitialisation n\'est plus valable. Demandez-en un nouveau.',
+    ],
+    'invitation' => [
+        'title' => 'Invitation',
+        'heading' => 'Activez votre compte',
+        'password' => 'Mot de passe',
+        'confirmation' => 'Confirmation',
+        'submit' => 'Activer mon compte',
+        'expired' => 'Cette invitation n\'est plus valable. Demandez-en une nouvelle.',
+    ],
+    'account' => [
+        'title' => 'Mon profil',
+        'heading' => 'Mon profil',
+        'name' => 'Nom',
+        'email' => 'Adresse électronique',
+        'save' => 'Enregistrer',
+        'saved' => 'Votre profil a été enregistré.',
+        'password_heading' => 'Changer de mot de passe',
+        'current_password' => 'Mot de passe actuel',
+        'new_password' => 'Nouveau mot de passe',
+        'confirmation' => 'Confirmation',
+        'change_password' => 'Changer le mot de passe',
+        'password_changed' => 'Votre mot de passe a été changé. Vos autres sessions ont été fermées.',
+        'logout' => 'Se déconnecter',
+    ],
+];
