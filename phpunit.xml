@@ -7,6 +7,21 @@
     <testsuite name="functional/users">
       <directory>functional/users/tests</directory>
     </testsuite>
+    <testsuite name="functional/organizations">
+      <directory>functional/organizations/tests</directory>
+    </testsuite>
+    <testsuite name="functional/catalog">
+      <directory>functional/catalog/tests</directory>
+    </testsuite>
+    <testsuite name="functional/licensing">
+      <directory>functional/licensing/tests</directory>
+    </testsuite>
+    <testsuite name="technical/audit">
+      <directory>technical/audit/tests</directory>
+    </testsuite>
+    <testsuite name="technical/oidc">
+      <directory>technical/oidc/tests</directory>
+    </testsuite>
   </testsuites>
   <source>
     <include>

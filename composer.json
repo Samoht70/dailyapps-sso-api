@@ -13,15 +13,23 @@
     "require": {
         "php": "^8.4",
         "functional/users": "*",
+        "jeremy379/laravel-openid-connect": "^3.3",
         "laravel/framework": "^13.17",
+        "laravel/passport": "^13.8",
         "laravel/tinker": "^3.0",
+        "livewire/livewire": "^4.4",
         "lomkit/laravel-access-control": "^0.5.0",
         "lomkit/laravel-rest-api": "^2.23",
         "spatie/laravel-permission": "^8.3",
-        "technical/osdd": "*",
-        "xefi/laravel-osdd": "^2.0",
         "technical/framework": "*",
-        "technical/permissions": "*"
+        "technical/osdd": "*",
+        "technical/permissions": "*",
+        "xefi/laravel-osdd": "^2.0",
+        "functional/organizations": "*",
+        "functional/catalog": "*",
+        "functional/licensing": "*",
+        "technical/oidc": "*",
+        "technical/audit": "*"
     },
     "require-dev": {
         "laravel/boost": "^2.9",
