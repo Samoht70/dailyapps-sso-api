@@ -35,7 +35,9 @@ on first boot.
 
 ## Commits
 
-Trunk is `main`. Feature branches are cut from it by the workspace's
+Trunk is `staging`, as declared in the workspace `repos.yml`. `main` is the
+release branch and only ever moves by fast-forwarding `staging` into it — never
+open a feature branch from it. Feature branches are cut from `staging` by the
 `speckit.multirepo.branch` hook, one per spec-kit feature.
 
 ===
