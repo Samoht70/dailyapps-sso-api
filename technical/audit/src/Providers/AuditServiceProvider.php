@@ -2,7 +2,8 @@
 
 namespace Technical\Audit\Providers;
 
-use Technical\Audit\Database\Seeders\AuditSeeder;
+use Lomkit\Access\Access;
+use Technical\Audit\Rest\Controls\SecurityEventControl;
 use Xefi\LaravelOSDD\LayerServiceProvider;
 
 class AuditServiceProvider extends LayerServiceProvider
@@ -11,14 +12,14 @@ class AuditServiceProvider extends LayerServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
-            $this->loadSeeders([AuditSeeder::class]);
         }
 
+        (new Access)->addControls([new SecurityEventControl]);
+
         $this->withRouting(
-            web: __DIR__.'/../../routes/web.php',
             api: __DIR__.'/../../routes/api.php',
             commands: __DIR__.'/../../routes/console.php',
-            channels: __DIR__.'/../../routes/channels.php',
+            apiPrefix: '',
         );
     }
 

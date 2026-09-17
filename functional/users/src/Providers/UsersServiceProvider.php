@@ -2,8 +2,9 @@
 
 namespace Functional\Users\Providers;
 
-use Functional\Users\Database\Seeders\UsersSeeder;
 use Functional\Users\Models\User;
+use Functional\Users\Rest\Controls\UserControl;
+use Lomkit\Access\Access;
 use Xefi\LaravelOSDD\LayerServiceProvider;
 
 class UsersServiceProvider extends LayerServiceProvider
@@ -12,8 +13,14 @@ class UsersServiceProvider extends LayerServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
-            $this->loadSeeders([UsersSeeder::class]);
         }
+
+        (new Access)->addControls([new UserControl]);
+
+        $this->withRouting(
+            api: __DIR__.'/../../routes/api.php',
+            apiPrefix: '',
+        );
     }
 
     public function register(): void

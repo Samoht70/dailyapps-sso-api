@@ -10,7 +10,8 @@
         "psr-4": {
             "Technical\\Permissions\\": "src/",
             "Technical\\Permissions\\Database\\Seeders\\": "database/seeders/",
-            "Technical\\Permissions\\Database\\Factories\\": "database/factories/"
+            "Technical\\Permissions\\Database\\Factories\\": "database/factories/",
+            "Technical\\Permissions\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable",

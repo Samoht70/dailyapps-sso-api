@@ -1,0 +1,52 @@
+<?php
+
+return [
+    'login' => [
+        'title' => 'Sign in',
+        'heading' => 'Sign in',
+        'email' => 'Email address',
+        'password' => 'Password',
+        'remember' => 'Stay signed in',
+        'submit' => 'Sign in',
+        'forgot' => 'Forgot your password?',
+    ],
+    'forgot_password' => [
+        'title' => 'Forgotten password',
+        'heading' => 'Reset your password',
+        'email' => 'Email address',
+        'submit' => 'Send the link',
+        'sent' => 'If an account matches that address, a reset link has just been sent.',
+        'back' => 'Back to sign in',
+    ],
+    'reset_password' => [
+        'title' => 'New password',
+        'heading' => 'Choose a new password',
+        'password' => 'New password',
+        'confirmation' => 'Confirmation',
+        'submit' => 'Save',
+        'invalid' => 'This reset link is no longer valid. Please request a new one.',
+    ],
+    'invitation' => [
+        'title' => 'Invitation',
+        'heading' => 'Activate your account',
+        'password' => 'Password',
+        'confirmation' => 'Confirmation',
+        'submit' => 'Activate my account',
+        'expired' => 'This invitation is no longer valid. Please request a new one.',
+    ],
+    'account' => [
+        'title' => 'My profile',
+        'heading' => 'My profile',
+        'name' => 'Name',
+        'email' => 'Email address',
+        'save' => 'Save',
+        'saved' => 'Your profile has been saved.',
+        'password_heading' => 'Change your password',
+        'current_password' => 'Current password',
+        'new_password' => 'New password',
+        'confirmation' => 'Confirmation',
+        'change_password' => 'Change password',
+        'password_changed' => 'Your password has been changed. Your other sessions were closed.',
+        'logout' => 'Sign out',
+    ],
+];

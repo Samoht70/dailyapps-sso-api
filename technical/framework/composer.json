@@ -10,7 +10,8 @@
         "psr-4": {
             "Technical\\Framework\\": "src/",
             "Technical\\Framework\\Database\\Seeders\\": "database/seeders/",
-            "Technical\\Framework\\Database\\Factories\\": "database/factories/"
+            "Technical\\Framework\\Database\\Factories\\": "database/factories/",
+            "Technical\\Framework\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable",

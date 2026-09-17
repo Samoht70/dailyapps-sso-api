@@ -2,7 +2,11 @@
 
 namespace Functional\Catalog\Providers;
 
-use Functional\Catalog\Database\Seeders\CatalogSeeder;
+use Functional\Catalog\Listeners\DetachRolesOnApplicationRoleDeleting;
+use Functional\Catalog\Models\ApplicationRole;
+use Functional\Catalog\Rest\Controls\ApplicationControl;
+use Functional\Catalog\Rest\Controls\ApplicationRoleControl;
+use Lomkit\Access\Access;
 use Xefi\LaravelOSDD\LayerServiceProvider;
 
 class CatalogServiceProvider extends LayerServiceProvider
@@ -11,14 +15,15 @@ class CatalogServiceProvider extends LayerServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
-            $this->loadSeeders([CatalogSeeder::class]);
         }
 
+        (new Access)->addControls([new ApplicationControl, new ApplicationRoleControl]);
+
+        ApplicationRole::deleting(app(DetachRolesOnApplicationRoleDeleting::class)->handle(...));
+
         $this->withRouting(
-            web: __DIR__.'/../../routes/web.php',
             api: __DIR__.'/../../routes/api.php',
-            commands: __DIR__.'/../../routes/console.php',
-            channels: __DIR__.'/../../routes/channels.php',
+            apiPrefix: '',
         );
     }
 
