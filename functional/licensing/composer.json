@@ -1,0 +1,26 @@
+{
+    "name": "functional/licensing",
+    "description": "",
+    "type": "layer",
+    "version": "1.0.0",
+    "require": {
+        "xefi/laravel-osdd": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Functional\\Licensing\\": "src/",
+            "Functional\\Licensing\\Database\\Seeders\\": "database/seeders/",
+            "Functional\\Licensing\\Database\\Factories\\": "database/factories/",
+            "Functional\\Licensing\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Functional\\Licensing\\Providers\\LicensingServiceProvider"
+            ]
+        }
+    }
+}

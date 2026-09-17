@@ -1,0 +1,26 @@
+{
+    "name": "technical/oidc",
+    "description": "",
+    "type": "layer",
+    "version": "1.0.0",
+    "require": {
+        "xefi/laravel-osdd": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Technical\\Oidc\\": "src/",
+            "Technical\\Oidc\\Database\\Seeders\\": "database/seeders/",
+            "Technical\\Oidc\\Database\\Factories\\": "database/factories/",
+            "Technical\\Oidc\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Technical\\Oidc\\Providers\\OidcServiceProvider"
+            ]
+        }
+    }
+}
