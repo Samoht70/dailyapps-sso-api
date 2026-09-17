@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Technical\Oidc\Models\SsoSession;
 use Tests\TestCase;
 
-class SessionLifetimeTest extends TestCase
+class SessionExpiryTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -60,6 +60,31 @@ class SessionLifetimeTest extends TestCase
         $session->revoke();
 
         $this->withoutVite()->get('/account')->assertRedirect(route('login'));
+    }
+
+    #[Test]
+    public function it_asks_a_quiet_session_to_identify_itself_again_before_authorizing(): void
+    {
+        $quietFor = config('oidc.session.inactivity_minutes') + 1;
+        [$account, $session] = $this->signedIn(lastSeen: now()->subMinutes($quietFor));
+
+        $this->withoutVite()
+            ->get('/oauth/authorize?client_id=any&response_type=code')
+            ->assertRedirect(route('login'));
+
+        $this->assertFalse($session->fresh()->isAlive());
+    }
+
+    #[Test]
+    public function it_asks_a_session_past_its_absolute_expiry_to_identify_itself_again(): void
+    {
+        [$account, $session] = $this->signedIn(lastSeen: now(), expiresAt: now()->subMinute());
+
+        $this->withoutVite()
+            ->get('/oauth/authorize?client_id=any&response_type=code')
+            ->assertRedirect(route('login'));
+
+        $this->assertFalse($session->fresh()->isAlive());
     }
 
     #[Test]

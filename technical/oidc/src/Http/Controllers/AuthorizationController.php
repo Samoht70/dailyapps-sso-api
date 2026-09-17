@@ -8,7 +8,9 @@ use League\OAuth2\Server\RequestTypes\AuthorizationRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Technical\Oidc\Actions\AuthorizeUser;
+use Technical\Oidc\Events\ApplicationEnteredSession;
 use Technical\Oidc\Models\Client;
+use Technical\Oidc\Models\SsoSession;
 
 class AuthorizationController extends PassportAuthorizationController
 {
@@ -31,6 +33,18 @@ class AuthorizationController extends PassportAuthorizationController
             return $this->convertResponse($refusal->generateHttpResponse($psrResponse));
         }
 
+        $this->recordParticipation($client);
+
         return parent::approveRequest($authRequest, $psrResponse);
+    }
+
+    private function recordParticipation(Client $client): void
+    {
+        $sessionId = session()->get(SsoSession::SESSION_KEY);
+        $session = $sessionId === null ? null : SsoSession::query()->find($sessionId);
+
+        if ($session !== null && $client->application !== null) {
+            ApplicationEnteredSession::dispatch($session, $client->application);
+        }
     }
 }

@@ -20,12 +20,14 @@ use Technical\Oidc\AuthorizationGuards;
 use Technical\Oidc\Bridge\AccessTokenRepository;
 use Technical\Oidc\ClaimsRegistry;
 use Technical\Oidc\CurrentSsoSession;
+use Technical\Oidc\Events\ApplicationEnteredSession;
 use Technical\Oidc\Exceptions\ConsentScreenNotAvailable;
 use Technical\Oidc\Guards\AccountIsAvailable;
 use Technical\Oidc\Http\Controllers\AuthorizationController;
 use Technical\Oidc\Http\Middleware\EnforceSsoSessionLifetime;
 use Technical\Oidc\Listeners\OpenSsoSession;
 use Technical\Oidc\Listeners\RecordAuthenticationEvents;
+use Technical\Oidc\Listeners\RecordSessionParticipant;
 use Technical\Oidc\Livewire\AcceptInvitation;
 use Technical\Oidc\Livewire\Account;
 use Technical\Oidc\Livewire\ForgotPassword;
@@ -117,5 +119,6 @@ class OidcServiceProvider extends LayerServiceProvider
         Event::listen(PasswordResetLinkSent::class, [RecordAuthenticationEvents::class, 'handleResetLinkSent']);
         Event::listen(PasswordChanged::class, CloseSessionsOnPasswordChange::class);
         Event::listen(PasswordChanged::class, [RecordAuthenticationEvents::class, 'handlePasswordChanged']);
+        Event::listen(ApplicationEnteredSession::class, RecordSessionParticipant::class);
     }
 }
