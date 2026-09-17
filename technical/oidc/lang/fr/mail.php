@@ -8,4 +8,10 @@ return [
         'expires' => 'Ce lien expirera dans :minutes minutes.',
         'ignore' => 'Si vous n\'êtes pas à l\'origine de cette demande, vous pouvez ignorer ce message.',
     ],
+    'invitation' => [
+        'subject' => 'Vous êtes invité sur DailyApps',
+        'line' => 'Un administrateur vous a ouvert un compte. Choisissez votre mot de passe pour l\'activer.',
+        'action' => 'Activer mon compte',
+        'expires' => 'Cette invitation expirera dans :days jours.',
+    ],
 ];

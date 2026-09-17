@@ -26,6 +26,7 @@ use Technical\Oidc\Http\Controllers\AuthorizationController;
 use Technical\Oidc\Http\Middleware\EnforceSsoSessionLifetime;
 use Technical\Oidc\Listeners\OpenSsoSession;
 use Technical\Oidc\Listeners\RecordAuthenticationEvents;
+use Technical\Oidc\Livewire\AcceptInvitation;
 use Technical\Oidc\Livewire\Account;
 use Technical\Oidc\Livewire\ForgotPassword;
 use Technical\Oidc\Livewire\Login;
@@ -84,6 +85,7 @@ class OidcServiceProvider extends LayerServiceProvider
         Livewire::component('oidc.forgot-password', ForgotPassword::class);
         Livewire::component('oidc.reset-password', ResetPassword::class);
         Livewire::component('oidc.account', Account::class);
+        Livewire::component('oidc.accept-invitation', AcceptInvitation::class);
     }
 
     private function registerPassport(): void

@@ -5,18 +5,23 @@ namespace Functional\Licensing\Models;
 use Functional\Catalog\Models\Application;
 use Functional\Licensing\Database\Factories\LicenseFactory;
 use Functional\Licensing\Models\Concerns\HasValidity;
+use Functional\Licensing\Rest\Policies\LicensePolicy;
 use Functional\Organizations\Models\Organization;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Lomkit\Access\Controls\HasControl;
 
 #[Fillable(['organization_id', 'application_id', 'starts_on', 'ends_on', 'seats'])]
+#[UsePolicy(LicensePolicy::class)]
 #[UseFactory(LicenseFactory::class)]
 class License extends Model
 {
+    use HasControl;
     use HasFactory;
     use HasUuids;
     use HasValidity;

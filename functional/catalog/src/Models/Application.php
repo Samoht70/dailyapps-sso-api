@@ -5,21 +5,26 @@ namespace Functional\Catalog\Models;
 use Functional\Catalog\Database\Factories\ApplicationFactory;
 use Functional\Catalog\Enums\ApplicationStatus;
 use Functional\Catalog\Models\Concerns\Publishable;
+use Functional\Catalog\Rest\Policies\ApplicationPolicy;
 use Functional\Licensing\Models\ApplicationAccess;
 use Functional\Licensing\Models\License;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Lomkit\Access\Controls\HasControl;
 use Technical\Oidc\Models\Client;
 
 #[Fillable(['slug', 'name', 'description', 'logo_url', 'home_url', 'backchannel_logout_url', 'oauth_client_id'])]
+#[UsePolicy(ApplicationPolicy::class)]
 #[UseFactory(ApplicationFactory::class)]
 class Application extends Model
 {
+    use HasControl;
     use HasFactory;
     use HasUuids;
     use Publishable;

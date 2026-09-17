@@ -2,6 +2,9 @@
 
 namespace Functional\Catalog\Providers;
 
+use Functional\Catalog\Rest\Controls\ApplicationControl;
+use Functional\Catalog\Rest\Controls\ApplicationRoleControl;
+use Lomkit\Access\Access;
 use Xefi\LaravelOSDD\LayerServiceProvider;
 
 class CatalogServiceProvider extends LayerServiceProvider
@@ -12,11 +15,11 @@ class CatalogServiceProvider extends LayerServiceProvider
             $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
         }
 
+        (new Access)->addControls([new ApplicationControl, new ApplicationRoleControl]);
+
         $this->withRouting(
-            web: __DIR__.'/../../routes/web.php',
             api: __DIR__.'/../../routes/api.php',
-            commands: __DIR__.'/../../routes/console.php',
-            channels: __DIR__.'/../../routes/channels.php',
+            apiPrefix: '',
         );
     }
 

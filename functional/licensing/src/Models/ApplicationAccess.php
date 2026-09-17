@@ -5,19 +5,24 @@ namespace Functional\Licensing\Models;
 use Functional\Catalog\Models\Application;
 use Functional\Catalog\Models\ApplicationRole;
 use Functional\Licensing\Database\Factories\ApplicationAccessFactory;
+use Functional\Licensing\Rest\Policies\ApplicationAccessPolicy;
 use Functional\Users\Models\User;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Lomkit\Access\Controls\HasControl;
 
 #[Fillable(['user_id', 'application_id', 'granted_by_id', 'granted_at'])]
+#[UsePolicy(ApplicationAccessPolicy::class)]
 #[UseFactory(ApplicationAccessFactory::class)]
 class ApplicationAccess extends Model
 {
+    use HasControl;
     use HasFactory;
     use HasUuids;
 
