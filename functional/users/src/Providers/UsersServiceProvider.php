@@ -12,6 +12,11 @@ class UsersServiceProvider extends LayerServiceProvider
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
         }
+
+        $this->withRouting(
+            api: __DIR__.'/../../routes/api.php',
+            apiPrefix: '',
+        );
     }
 
     public function register(): void

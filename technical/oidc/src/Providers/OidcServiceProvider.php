@@ -12,11 +12,14 @@ use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
+use Laravel\Passport\Bridge\AccessTokenRepository as PassportAccessTokenRepository;
 use Laravel\Passport\Http\Controllers\AuthorizationController as PassportAuthorizationController;
 use Laravel\Passport\Passport;
 use Livewire\Livewire;
 use Technical\Oidc\AuthorizationGuards;
+use Technical\Oidc\Bridge\AccessTokenRepository;
 use Technical\Oidc\ClaimsRegistry;
+use Technical\Oidc\CurrentSsoSession;
 use Technical\Oidc\Exceptions\ConsentScreenNotAvailable;
 use Technical\Oidc\Guards\AccountIsAvailable;
 use Technical\Oidc\Http\Controllers\AuthorizationController;
@@ -60,8 +63,11 @@ class OidcServiceProvider extends LayerServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../../config/passport.php', 'passport');
         $this->mergeConfigFrom(__DIR__.'/../../config/openid.php', 'openid');
         $this->mergeConfigFrom(__DIR__.'/../../config/oidc.php', 'oidc');
+        $this->overrideConfigFrom(__DIR__.'/../../config/auth.php', 'auth');
 
         $this->app->singleton(ClaimsRegistry::class);
+        $this->app->singleton(CurrentSsoSession::class);
+        $this->app->bind(PassportAccessTokenRepository::class, AccessTokenRepository::class);
         $this->app->singleton(AuthorizationGuards::class);
 
         $this->app->bind(PassportAuthorizationController::class, AuthorizationController::class);
@@ -92,12 +98,13 @@ class OidcServiceProvider extends LayerServiceProvider
             fn (array $parameters) => throw ConsentScreenNotAvailable::forClient($parameters['client']->name),
         );
 
-        Passport::tokensCan([
-            'openid' => __('oidc::scopes.openid'),
-            'profile' => __('oidc::scopes.profile'),
-            'email' => __('oidc::scopes.email'),
-            'applications' => __('oidc::scopes.applications'),
-        ]);
+        Passport::tokensCan(array_map(
+            fn (string $scope): string => __('oidc::scopes.'.$scope),
+            array_combine(
+                $scopes = array_keys(config('openid.passport.tokens_can')),
+                $scopes,
+            ),
+        ));
     }
 
     private function registerListeners(): void

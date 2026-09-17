@@ -1,7 +1,7 @@
 <?php
 
 use Lcobucci\JWT\Signer\Rsa\Sha256;
-use OpenIDConnect\Repositories\IdentityRepository;
+use Technical\Oidc\Repositories\SsoIdentityRepository;
 
 return [
     'passport' => [
@@ -11,12 +11,10 @@ return [
          * To receive an `id_token, you should at least provide the openid scope.
          */
         'tokens_can' => [
-            'openid' => 'Enable OpenID Connect',
-            'profile' => 'Information about your profile',
-            'email' => 'Information about your email address',
-            'phone' => 'Information about your phone numbers',
-            'address' => 'Information about your address',
-            // 'login' => 'See your login information',
+            'openid' => 'openid',
+            'profile' => 'profile',
+            'email' => 'email',
+            'applications' => 'applications',
         ],
     ],
 
@@ -24,22 +22,30 @@ return [
      * Place your custom claim sets here.
      */
     'custom_claim_sets' => [
-        // 'login' => [
-        //     'last-login',
-        // ],
-        // 'company' => [
-        //     'company_name',
-        //     'company_address',
-        //     'company_phone',
-        //     'company_email',
-        // ],
+
+        /**
+         * `sid` rides on the openid scope, which every id_token request carries:
+         * without it a logout push has no way to name the session to close.
+         */
+        'openid' => [
+            'sid',
+        ],
+
+        'profile' => [
+            'name',
+            'organization',
+        ],
+
+        'applications' => [
+            'roles',
+        ],
     ],
 
     /**
      * You can override the repositories below.
      */
     'repositories' => [
-        'identity' => IdentityRepository::class,
+        'identity' => SsoIdentityRepository::class,
     ],
 
     'routes' => [
@@ -62,7 +68,7 @@ return [
          * The endpoint is protected by Passport's auth:api guard and returns claims
          * for the authenticated user filtered by the access token's granted scopes.
          */
-        'userinfo' => false,
+        'userinfo' => true,
     ],
 
     /**

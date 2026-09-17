@@ -15,6 +15,7 @@ return new class extends Migration
             $table->char('id', 80)->primary();
             $table->foreignUuid('user_id')->nullable()->index();
             $table->foreignUuid('client_id');
+            $table->uuid('sso_session_id')->nullable()->index();
             $table->string('name')->nullable();
             $table->text('scopes')->nullable();
             $table->boolean('revoked');

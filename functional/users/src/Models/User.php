@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Technical\Oidc\Models\SsoSession;
 
@@ -27,7 +28,7 @@ use Technical\Oidc\Models\SsoSession;
 class User extends Authenticatable
 {
     use HasAccountState;
-    use HasFactory, HasRoles, HasUuids, Notifiable;
+    use HasApiTokens, HasFactory, HasRoles, HasUuids, Notifiable;
 
     /** @var array<string, string> */
     protected $attributes = [

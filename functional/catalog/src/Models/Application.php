@@ -5,6 +5,7 @@ namespace Functional\Catalog\Models;
 use Functional\Catalog\Database\Factories\ApplicationFactory;
 use Functional\Catalog\Enums\ApplicationStatus;
 use Functional\Catalog\Models\Concerns\Publishable;
+use Functional\Licensing\Models\ApplicationAccess;
 use Functional\Licensing\Models\License;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
@@ -43,6 +44,12 @@ class Application extends Model
     public function licenses(): HasMany
     {
         return $this->hasMany(License::class);
+    }
+
+    /** @return HasMany<ApplicationAccess, $this> */
+    public function accesses(): HasMany
+    {
+        return $this->hasMany(ApplicationAccess::class);
     }
 
     /** @return BelongsTo<Client, $this> */
