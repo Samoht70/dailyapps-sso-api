@@ -18,15 +18,15 @@ class OrganizationsTest extends TestCase
 
         $this->assertMatchesRegularExpression(
             '/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/',
-            $organization->id,
+            $organization->getKey(),
         );
     }
 
     #[Test]
     public function it_keeps_uuids_time_ordered(): void
     {
-        $first = Organization::factory()->create()->id;
-        $second = Organization::factory()->create()->id;
+        $first = Organization::factory()->create()->getKey();
+        $second = Organization::factory()->create()->getKey();
 
         $this->assertLessThan($second, $first);
     }

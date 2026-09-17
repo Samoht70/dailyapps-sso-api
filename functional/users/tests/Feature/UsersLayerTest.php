@@ -16,7 +16,7 @@ class UsersLayerTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $this->assertDatabaseHas('users', ['id' => $user->id, 'email' => $user->email]);
+        $this->assertDatabaseHas('users', ['id' => $user->getKey(), 'email' => $user->email]);
     }
 
     #[Test]
