@@ -21,7 +21,7 @@
         default => 'h-12 px-6 text-sm/5',
     };
 
-    $shape = 'inline-flex items-center justify-center gap-2 rounded-field font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:bg-surface-subtle disabled:text-disabled';
+    $shape = 'inline-flex items-center justify-center gap-2 rounded-field font-bold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:bg-surface-subtle disabled:text-disabled';
 
     $classes = implode(' ', array_filter([$shape, $metrics, $palette, $block ? 'w-full' : null]));
 @endphp

@@ -8,6 +8,11 @@ return [
         'invitation_tagline' => 'Activate your account: it opens every application your organization uses.',
         'logo_alt' => 'DailyApps',
     ],
+    'field' => [
+        'required' => 'required',
+        'show_password' => 'Show the password',
+        'hide_password' => 'Hide the password',
+    ],
     'link_expired' => [
         'title' => 'Link expired',
         'reset_heading' => 'This link is no longer valid',

@@ -8,6 +8,11 @@ return [
         'invitation_tagline' => 'Activez votre compte : il vous ouvre toutes les applications de votre organisation.',
         'logo_alt' => 'DailyApps',
     ],
+    'field' => [
+        'required' => 'obligatoire',
+        'show_password' => 'Afficher le mot de passe',
+        'hide_password' => 'Masquer le mot de passe',
+    ],
     'link_expired' => [
         'title' => 'Lien expiré',
         'reset_heading' => 'Ce lien n\'est plus valable',
