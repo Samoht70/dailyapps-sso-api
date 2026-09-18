@@ -48,5 +48,5 @@
         <x-oidc::button block>{{ __('oidc::screens.login.submit') }}</x-oidc::button>
     </form>
 
-    <x-oidc::hint class="mt-8">{{ __('oidc::screens.login.support') }}</x-oidc::hint>
+    <x-oidc::hint class="mt-6 text-center">{{ __('oidc::screens.login.support') }}</x-oidc::hint>
 </div>

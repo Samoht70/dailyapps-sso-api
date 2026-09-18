@@ -1,15 +1,15 @@
-<div>
-    <x-oidc::heading>{{ __('oidc::screens.invitation.heading') }}</x-oidc::heading>
+<div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-1">
+        <x-oidc::heading>{{ __('oidc::screens.invitation.heading') }}</x-oidc::heading>
+        <p class="text-sm/5 text-muted">{{ $email }}</p>
+    </div>
 
-    <p class="mt-2 text-sm/5 text-muted">{{ $email }}</p>
-
-    <form wire:submit="activate" class="mt-8 flex flex-col gap-6">
+    <form wire:submit="activate" class="flex flex-col gap-4">
         <x-oidc::field
             name="password"
             type="password"
             :label="__('oidc::screens.invitation.password')"
-            :placeholder="__('oidc::screens.invitation.password_placeholder')"
-            :hint="__('oidc::screens.account.password_hint', ['min' => \Functional\Users\Rules\PasswordStrength::MINIMUM_LENGTH])"
+            :placeholder="__('oidc::screens.invitation.password_placeholder', ['min' => \Functional\Users\Rules\PasswordStrength::MINIMUM_LENGTH])"
             autocomplete="new-password"
             required
             autofocus />
@@ -25,5 +25,5 @@
         <x-oidc::button block>{{ __('oidc::screens.invitation.submit') }}</x-oidc::button>
     </form>
 
-    <x-oidc::hint class="mt-8">{{ __('oidc::screens.invitation.expired_hint') }}</x-oidc::hint>
+    <x-oidc::hint class="text-center">{{ __('oidc::screens.invitation.expired_hint') }}</x-oidc::hint>
 </div>

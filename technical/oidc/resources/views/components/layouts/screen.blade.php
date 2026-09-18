@@ -16,7 +16,7 @@
 </head>
 <body class="min-h-full overflow-x-hidden bg-page font-sans text-body antialiased">
 <div class="flex min-h-dvh flex-col lg:flex-row">
-    <x-oidc::brand.panel :headline="$headline" :tagline="$tagline" class="lg:w-[480px] lg:shrink-0" />
+    <x-oidc::brand.panel :headline="$headline" :tagline="$tagline" class="lg:w-[560px] lg:shrink-0" />
 
     <main class="flex flex-1 items-center justify-center px-6 py-12">
         <div class="w-full max-w-[400px]">
