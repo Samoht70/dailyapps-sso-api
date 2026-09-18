@@ -24,10 +24,19 @@ class ResetPassword extends Component
 
     public string $password_confirmation = '';
 
+    #[Locked]
+    public bool $expired = false;
+
+    /**
+     * The token is only read when the address travels with the link, which the
+     * mailed URL always carries. A link retyped without it falls back to the
+     * form, where the submission stays the guard.
+     */
     public function mount(string $token): void
     {
         $this->token = $token;
         $this->email = (string) request()->query('email', '');
+        $this->expired = $this->email !== '' && ! $this->tokenIsAlive();
     }
 
     public function resetPassword(): void
@@ -63,5 +72,17 @@ class ResetPassword extends Component
     public function render(): View
     {
         return view('oidc::livewire.reset-password');
+    }
+
+    /**
+     * Reads the token without spending it. An unknown address and a wrong token
+     * answer alike, so the screen never tells that an account exists.
+     */
+    private function tokenIsAlive(): bool
+    {
+        $account = Password::broker()->getUser(['email' => $this->email]);
+
+        return $account !== null
+            && Password::broker()->getRepository()->exists($account, $this->token);
     }
 }

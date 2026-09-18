@@ -6,7 +6,11 @@ here — specs live above this directory.
 
 ## Status
 
-Scaffolded, no feature implemented — the SSO specs are not written yet.
+Feature 001 landed the SSO itself — organizations, users, invitations, the five
+authentication screens, Passport/OIDC and the session journal. Feature 002 gave
+the parcours its DailyApps identity: design tokens in `technical/framework`, a
+socle of Blade components in `technical/oidc`, and the two dead-link screens.
+
 Laravel 13 on PHP 8.4, OSDD layers (`xefi/laravel-osdd`).
 
 Layers live in `functional/` (business domains) and `technical/` (cross-cutting

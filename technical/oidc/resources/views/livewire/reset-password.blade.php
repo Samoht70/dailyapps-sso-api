@@ -1,37 +1,69 @@
-<div>
-    <h1 class="text-2xl font-semibold tracking-tight">{{ __('oidc::screens.reset_password.heading') }}</h1>
+@php
+    $refusedToken = collect($errors->get('email'))->first(
+        fn (string $message): bool => $message === __('oidc::screens.reset_password.invalid'),
+    );
 
-    <form wire:submit="resetPassword" class="mt-8 space-y-6">
-        <div>
-            <label for="email" class="block text-sm font-medium">{{ __('oidc::screens.forgot_password.email') }}</label>
-            <input id="email" type="email" autocomplete="username" required
-                   wire:model="email"
-                   class="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-gray-900 focus:outline-none">
-            @error('email')
-                <p class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</p>
-            @enderror
+    if ($refusedToken !== null) {
+        $errors->put('default', new \Illuminate\Support\MessageBag(
+            collect($errors->getBag('default')->messages())->except('email')->all(),
+        ));
+    }
+@endphp
+
+<div class="flex flex-col gap-6">
+    @if ($expired)
+        <div class="flex flex-col gap-4">
+            <x-oidc::clock />
+            <x-oidc::heading>{{ __('oidc::screens.link_expired.reset_heading') }}</x-oidc::heading>
         </div>
 
-        <div>
-            <label for="password" class="block text-sm font-medium">{{ __('oidc::screens.reset_password.password') }}</label>
-            <input id="password" type="password" autocomplete="new-password" required autofocus
-                   wire:model="password"
-                   class="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-gray-900 focus:outline-none">
-            @error('password')
-                <p class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</p>
-            @enderror
-        </div>
+        <x-oidc::alert tone="warning" :title="__('oidc::screens.link_expired.alert_title')">
+            {{ __('oidc::screens.reset_password.invalid') }}
+        </x-oidc::alert>
 
-        <div>
-            <label for="password_confirmation" class="block text-sm font-medium">{{ __('oidc::screens.reset_password.confirmation') }}</label>
-            <input id="password_confirmation" type="password" autocomplete="new-password" required
-                   wire:model="password_confirmation"
-                   class="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-gray-900 focus:outline-none">
-        </div>
+        <x-oidc::button :href="route('password.forgot')" block>
+            {{ __('oidc::screens.link_expired.request_new') }}
+        </x-oidc::button>
 
-        <button type="submit"
-                class="w-full rounded-md bg-gray-900 px-4 py-2 font-medium text-white hover:bg-gray-800">
-            {{ __('oidc::screens.reset_password.submit') }}
-        </button>
-    </form>
+        <x-oidc::link :href="route('login')" icon="chevron-left" class="self-start">
+            {{ __('oidc::screens.link_expired.back') }}
+        </x-oidc::link>
+    @else
+        <x-oidc::heading>{{ __('oidc::screens.reset_password.heading') }}</x-oidc::heading>
+
+        @if ($refusedToken !== null)
+            <x-oidc::alert tone="error">{{ $refusedToken }}</x-oidc::alert>
+        @endif
+
+        <form wire:submit="resetPassword" class="flex flex-col gap-4">
+            <x-oidc::field
+                name="email"
+                type="email"
+                :label="__('oidc::screens.reset_password.email')"
+                :placeholder="__('oidc::screens.login.email_placeholder')"
+                autocomplete="username"
+                required />
+
+            <x-oidc::field
+                name="password"
+                type="password"
+                :label="__('oidc::screens.reset_password.password')"
+                :placeholder="__('oidc::screens.reset_password.password_placeholder', ['min' => \Functional\Users\Rules\PasswordStrength::MINIMUM_LENGTH])"
+                autocomplete="new-password"
+                required
+                autofocus />
+
+            <x-oidc::field
+                name="password_confirmation"
+                type="password"
+                :label="__('oidc::screens.reset_password.confirmation')"
+                :placeholder="__('oidc::screens.reset_password.confirmation_placeholder')"
+                autocomplete="new-password"
+                required />
+
+            <x-oidc::button block>{{ __('oidc::screens.reset_password.submit') }}</x-oidc::button>
+        </form>
+
+        <x-oidc::hint>{{ __('oidc::screens.reset_password.sessions_hint') }}</x-oidc::hint>
+    @endif
 </div>

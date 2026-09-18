@@ -11,6 +11,7 @@ use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Technical\Audit\Actions\RecordSecurityEvent;
 use Technical\Audit\Enums\SecurityEventType;
+use Technical\Oidc\Exceptions\InvitationNoLongerValid;
 
 #[Layout('oidc::components.layouts.screen')]
 class AcceptInvitation extends Component
@@ -26,14 +27,15 @@ class AcceptInvitation extends Component
     public string $password_confirmation = '';
 
     /**
-     * An invitation that has expired or has already been spent answers `410`:
-     * it is gone, not merely refused, and asking again will not help.
+     * @throws InvitationNoLongerValid when the token points at nothing pending
      */
     public function mount(string $token): void
     {
         $invitation = $this->invitation($token);
 
-        abort_if($invitation === null, 410);
+        if ($invitation === null) {
+            throw InvitationNoLongerValid::forToken();
+        }
 
         $this->token = $token;
         $this->email = $invitation->email;
@@ -70,7 +72,10 @@ class AcceptInvitation extends Component
 
     public function render(): View
     {
-        return view('oidc::livewire.accept-invitation');
+        return view('oidc::livewire.accept-invitation')->layoutData([
+            'headline' => __('oidc::screens.brand.invitation_headline'),
+            'tagline' => __('oidc::screens.brand.invitation_tagline'),
+        ]);
     }
 
     private function invitation(string $token): ?Invitation

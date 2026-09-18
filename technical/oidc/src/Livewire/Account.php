@@ -13,7 +13,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Technical\Oidc\Models\SsoSession;
 
-#[Layout('oidc::components.layouts.screen')]
+#[Layout('oidc::components.layouts.app')]
 class Account extends Component
 {
     public string $name = '';

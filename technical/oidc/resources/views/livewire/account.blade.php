@@ -1,73 +1,76 @@
-<div class="space-y-10">
-    <h1 class="text-2xl font-semibold tracking-tight">{{ __('oidc::screens.account.heading') }}</h1>
+@php
+    $profileSaved = $notice === __('oidc::screens.account.saved');
+    $passwordChanged = $notice === __('oidc::screens.account.password_changed');
+@endphp
 
-    @if ($notice)
-        <p class="rounded-md bg-green-50 px-4 py-3 text-sm text-green-800" role="status">{{ $notice }}</p>
-    @endif
+<div class="flex flex-col gap-8">
+    <x-oidc::heading>{{ __('oidc::screens.account.heading') }}</x-oidc::heading>
 
-    <form wire:submit="saveProfile" class="space-y-6">
-        <div>
-            <label for="name" class="block text-sm font-medium">{{ __('oidc::screens.account.name') }}</label>
-            <input id="name" type="text" required wire:model="name"
-                   class="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-gray-900 focus:outline-none">
-            @error('name')
-                <p class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</p>
-            @enderror
-        </div>
+    <x-oidc::card :heading="__('oidc::screens.account.info_heading')">
+        @if ($profileSaved)
+            <x-oidc::alert tone="success" :title="__('oidc::screens.account.saved_title')" class="mb-6">
+                {{ $notice }}
+            </x-oidc::alert>
+        @endif
 
-        <div>
-            <label for="email" class="block text-sm font-medium">{{ __('oidc::screens.account.email') }}</label>
-            <input id="email" type="email" required wire:model="email"
-                   class="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-gray-900 focus:outline-none">
-            @error('email')
-                <p class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</p>
-            @enderror
-        </div>
+        <form wire:submit="saveProfile" class="flex flex-col gap-6">
+            <x-oidc::field
+                name="name"
+                :label="__('oidc::screens.account.name')"
+                :size="40"
+                autocomplete="name"
+                required />
 
-        <button type="submit" class="rounded-md bg-gray-900 px-4 py-2 font-medium text-white hover:bg-gray-800">
-            {{ __('oidc::screens.account.save') }}
-        </button>
-    </form>
-
-    <section class="space-y-6 border-t border-gray-200 pt-10">
-        <h2 class="text-lg font-semibold">{{ __('oidc::screens.account.password_heading') }}</h2>
-
-        <form wire:submit="changePassword" class="space-y-6">
-            <div>
-                <label for="current_password" class="block text-sm font-medium">{{ __('oidc::screens.account.current_password') }}</label>
-                <input id="current_password" type="password" autocomplete="current-password" required
-                       wire:model="current_password"
-                       class="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-gray-900 focus:outline-none">
-                @error('current_password')
-                    <p class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</p>
-                @enderror
-            </div>
+            <x-oidc::field
+                name="email"
+                type="email"
+                :label="__('oidc::screens.account.email')"
+                :size="40"
+                autocomplete="email"
+                required />
 
             <div>
-                <label for="new_password" class="block text-sm font-medium">{{ __('oidc::screens.account.new_password') }}</label>
-                <input id="new_password" type="password" autocomplete="new-password" required
-                       wire:model="password"
-                       class="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-gray-900 focus:outline-none">
-                @error('password')
-                    <p class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</p>
-                @enderror
+                <x-oidc::button :size="40">{{ __('oidc::screens.account.save') }}</x-oidc::button>
             </div>
-
-            <div>
-                <label for="password_confirmation" class="block text-sm font-medium">{{ __('oidc::screens.account.confirmation') }}</label>
-                <input id="password_confirmation" type="password" autocomplete="new-password" required
-                       wire:model="password_confirmation"
-                       class="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-gray-900 focus:outline-none">
-            </div>
-
-            <button type="submit" class="rounded-md bg-gray-900 px-4 py-2 font-medium text-white hover:bg-gray-800">
-                {{ __('oidc::screens.account.change_password') }}
-            </button>
         </form>
-    </section>
+    </x-oidc::card>
 
-    <form method="POST" action="{{ route('logout') }}" class="border-t border-gray-200 pt-10">
-        @csrf
-        <button type="submit" class="text-sm underline">{{ __('oidc::screens.account.logout') }}</button>
-    </form>
+    <x-oidc::card :heading="__('oidc::screens.account.password_heading')">
+        @if ($passwordChanged)
+            <x-oidc::alert tone="success" :title="__('oidc::screens.account.password_changed_title')" class="mb-6">
+                {{ $notice }}
+            </x-oidc::alert>
+        @endif
+
+        <form wire:submit="changePassword" class="flex flex-col gap-6">
+            <x-oidc::field
+                name="current_password"
+                type="password"
+                :label="__('oidc::screens.account.current_password')"
+                :size="40"
+                autocomplete="current-password"
+                required />
+
+            <x-oidc::field
+                name="password"
+                type="password"
+                :label="__('oidc::screens.account.new_password')"
+                :size="40"
+                :hint="__('oidc::screens.account.password_hint', ['min' => \Functional\Users\Rules\PasswordStrength::MINIMUM_LENGTH])"
+                autocomplete="new-password"
+                required />
+
+            <x-oidc::field
+                name="password_confirmation"
+                type="password"
+                :label="__('oidc::screens.account.confirmation')"
+                :size="40"
+                autocomplete="new-password"
+                required />
+
+            <div>
+                <x-oidc::button :size="40">{{ __('oidc::screens.account.change_password') }}</x-oidc::button>
+            </div>
+        </form>
+    </x-oidc::card>
 </div>

@@ -1,41 +1,52 @@
+@php
+    $globalFailure = collect($errors->get('email'))->first(
+        fn (string $message): bool => collect(__('oidc::auth'))->contains(
+            fn (string $reason): bool => str_starts_with($message, \Illuminate\Support\Str::before($reason, ':')),
+        ),
+    );
+
+    if ($globalFailure !== null) {
+        $errors->put('default', new \Illuminate\Support\MessageBag(
+            collect($errors->getBag('default')->messages())->except('email')->all(),
+        ));
+    }
+@endphp
+
 <div>
-    <h1 class="text-2xl font-semibold tracking-tight">{{ __('oidc::screens.login.heading') }}</h1>
+    <x-oidc::heading>{{ __('oidc::screens.login.heading') }}</x-oidc::heading>
 
-    <form wire:submit="authenticate" class="mt-8 space-y-6">
-        <div>
-            <label for="email" class="block text-sm font-medium">{{ __('oidc::screens.login.email') }}</label>
-            <input id="email" type="email" autocomplete="username" required autofocus
-                   wire:model="email"
-                   class="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-gray-900 focus:outline-none">
-            @error('email')
-                <p class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</p>
-            @enderror
+    @if ($globalFailure !== null)
+        <x-oidc::alert tone="error" :title="__('oidc::screens.login.error_title')" class="mt-6">
+            {{ $globalFailure }}
+        </x-oidc::alert>
+    @endif
+
+    <form wire:submit="authenticate" class="mt-8 flex flex-col gap-6">
+        <x-oidc::field
+            name="email"
+            type="email"
+            :label="__('oidc::screens.login.email')"
+            :placeholder="__('oidc::screens.login.email_placeholder')"
+            autocomplete="username"
+            required
+            autofocus />
+
+        <x-oidc::field
+            name="password"
+            type="password"
+            :label="__('oidc::screens.login.password')"
+            :placeholder="__('oidc::screens.login.password_placeholder')"
+            autocomplete="current-password"
+            required />
+
+        <div class="flex flex-wrap items-center justify-between gap-4">
+            <x-oidc::checkbox name="remember" :label="__('oidc::screens.login.remember')" />
+
+            <x-oidc::link :href="route('password.forgot')">{{ __('oidc::screens.login.forgot') }}</x-oidc::link>
         </div>
 
-        <div>
-            <label for="password" class="block text-sm font-medium">{{ __('oidc::screens.login.password') }}</label>
-            <input id="password" type="password" autocomplete="current-password" required
-                   wire:model="password"
-                   class="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-gray-900 focus:outline-none">
-            @error('password')
-                <p class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</p>
-            @enderror
-        </div>
-
-        <div class="flex items-center justify-between">
-            <label class="flex items-center gap-2 text-sm">
-                <input type="checkbox" wire:model="remember" class="rounded border-gray-300">
-                {{ __('oidc::screens.login.remember') }}
-            </label>
-
-            <a href="{{ route('password.forgot') }}" wire:navigate class="text-sm underline">
-                {{ __('oidc::screens.login.forgot') }}
-            </a>
-        </div>
-
-        <button type="submit"
-                class="w-full rounded-md bg-gray-900 px-4 py-2 font-medium text-white hover:bg-gray-800">
-            {{ __('oidc::screens.login.submit') }}
-        </button>
+        <x-oidc::button block>{{ __('oidc::screens.login.submit') }}</x-oidc::button>
     </form>
+
+    <x-oidc::hint class="mt-6 text-center">{{ __('oidc::screens.login.support') }}</x-oidc::hint>
 </div>
