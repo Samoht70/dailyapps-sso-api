@@ -7,7 +7,7 @@
     $height = round((int) $width * 32 / 225, 2);
 @endphp
 
-<svg {{ $attributes->merge(['class' => 'block shrink-0']) }}
+<svg {{ $attributes->merge(['class' => 'block h-auto shrink-0']) }}
      width="{{ $width }}" height="{{ $height }}" viewBox="0 0 225 32" fill="none"
      xmlns="http://www.w3.org/2000/svg"
      role="img" aria-label="{{ __('oidc::screens.brand.logo_alt') }}">
