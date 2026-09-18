@@ -70,7 +70,10 @@ class AcceptInvitation extends Component
 
     public function render(): View
     {
-        return view('oidc::livewire.accept-invitation');
+        return view('oidc::livewire.accept-invitation')->layoutData([
+            'headline' => __('oidc::screens.brand.invitation_headline'),
+            'tagline' => __('oidc::screens.brand.invitation_tagline'),
+        ]);
     }
 
     private function invitation(string $token): ?Invitation

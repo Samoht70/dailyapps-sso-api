@@ -1,29 +1,29 @@
 <div>
-    <h1 class="text-2xl font-semibold tracking-tight">{{ __('oidc::screens.invitation.heading') }}</h1>
+    <x-oidc::heading>{{ __('oidc::screens.invitation.heading') }}</x-oidc::heading>
 
-    <p class="mt-2 text-sm text-gray-600">{{ $email }}</p>
+    <p class="mt-2 text-sm/5 text-muted">{{ $email }}</p>
 
-    <form wire:submit="activate" class="mt-8 space-y-6">
-        <div>
-            <label for="password" class="block text-sm font-medium">{{ __('oidc::screens.invitation.password') }}</label>
-            <input id="password" type="password" autocomplete="new-password" required autofocus
-                   wire:model="password"
-                   class="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-gray-900 focus:outline-none">
-            @error('password')
-                <p class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</p>
-            @enderror
-        </div>
+    <form wire:submit="activate" class="mt-8 flex flex-col gap-6">
+        <x-oidc::field
+            name="password"
+            type="password"
+            :label="__('oidc::screens.invitation.password')"
+            :placeholder="__('oidc::screens.invitation.password_placeholder')"
+            :hint="__('oidc::screens.account.password_hint', ['min' => \Functional\Users\Rules\PasswordStrength::MINIMUM_LENGTH])"
+            autocomplete="new-password"
+            required
+            autofocus />
 
-        <div>
-            <label for="password_confirmation" class="block text-sm font-medium">{{ __('oidc::screens.invitation.confirmation') }}</label>
-            <input id="password_confirmation" type="password" autocomplete="new-password" required
-                   wire:model="password_confirmation"
-                   class="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-gray-900 focus:outline-none">
-        </div>
+        <x-oidc::field
+            name="password_confirmation"
+            type="password"
+            :label="__('oidc::screens.invitation.confirmation')"
+            :placeholder="__('oidc::screens.invitation.confirmation_placeholder')"
+            autocomplete="new-password"
+            required />
 
-        <button type="submit"
-                class="w-full rounded-md bg-gray-900 px-4 py-2 font-medium text-white hover:bg-gray-800">
-            {{ __('oidc::screens.invitation.submit') }}
-        </button>
+        <x-oidc::button block>{{ __('oidc::screens.invitation.submit') }}</x-oidc::button>
     </form>
+
+    <x-oidc::hint class="mt-8">{{ __('oidc::screens.invitation.expired_hint') }}</x-oidc::hint>
 </div>

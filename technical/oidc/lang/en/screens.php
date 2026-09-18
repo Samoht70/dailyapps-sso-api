@@ -9,6 +9,10 @@ return [
         'logo_alt' => 'DailyApps',
     ],
     'login' => [
+        'error_title' => 'Sign-in refused',
+        'email_placeholder' => 'you@your-organization.com',
+        'password_placeholder' => 'Your password',
+        'support' => 'Trouble signing in? Contact your organization administrator.',
         'title' => 'Sign in',
         'heading' => 'Sign in',
         'email' => 'Email address',
@@ -18,6 +22,9 @@ return [
         'forgot' => 'Forgot your password?',
     ],
     'forgot_password' => [
+        'intro' => 'Give the address of your account: you will receive a link to choose a new password.',
+        'sent_title' => 'Email sent',
+        'expiry_hint' => 'The link stays valid for :minutes minutes and works only once.',
         'title' => 'Forgotten password',
         'heading' => 'Reset your password',
         'email' => 'Email address',
@@ -26,6 +33,9 @@ return [
         'back' => 'Back to sign in',
     ],
     'reset_password' => [
+        'email' => 'Email address',
+        'password_placeholder' => 'Your new password',
+        'confirmation_placeholder' => 'Type the password again',
         'title' => 'New password',
         'heading' => 'Choose a new password',
         'password' => 'New password',
@@ -34,6 +44,9 @@ return [
         'invalid' => 'This reset link is no longer valid. Please request a new one.',
     ],
     'invitation' => [
+        'password_placeholder' => 'Choose a password',
+        'confirmation_placeholder' => 'Type the password again',
+        'expired_hint' => 'This invitation does not last forever: activate your account without delay.',
         'title' => 'Invitation',
         'heading' => 'Activate your account',
         'password' => 'Password',
@@ -42,6 +55,10 @@ return [
         'expired' => 'This invitation is no longer valid. Please request a new one.',
     ],
     'account' => [
+        'info_heading' => 'Details',
+        'password_hint' => 'At least :min characters, with upper and lower case, digits and symbols.',
+        'saved_title' => 'Profile saved',
+        'password_changed_title' => 'Password changed',
         'title' => 'My profile',
         'heading' => 'My profile',
         'name' => 'Name',

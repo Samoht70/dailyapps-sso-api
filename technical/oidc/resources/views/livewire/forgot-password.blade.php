@@ -1,30 +1,36 @@
 <div>
-    <h1 class="text-2xl font-semibold tracking-tight">{{ __('oidc::screens.forgot_password.heading') }}</h1>
+    <x-oidc::heading>{{ __('oidc::screens.forgot_password.heading') }}</x-oidc::heading>
 
     @if ($sent)
-        <p class="mt-8 rounded-md bg-green-50 px-4 py-3 text-sm text-green-800" role="status">
+        <x-oidc::alert tone="success" :title="__('oidc::screens.forgot_password.sent_title')" class="mt-6">
             {{ __('oidc::screens.forgot_password.sent') }}
-        </p>
+        </x-oidc::alert>
 
-        <a href="{{ route('login') }}" wire:navigate class="mt-6 inline-block text-sm underline">
+        <x-oidc::hint class="mt-4">
+            {{ __('oidc::screens.forgot_password.expiry_hint', ['minutes' => config('auth.passwords.users.expire')]) }}
+        </x-oidc::hint>
+
+        <x-oidc::link :href="route('login')" icon="chevron-left" class="mt-8">
             {{ __('oidc::screens.forgot_password.back') }}
-        </a>
+        </x-oidc::link>
     @else
-        <form wire:submit="sendLink" class="mt-8 space-y-6">
-            <div>
-                <label for="email" class="block text-sm font-medium">{{ __('oidc::screens.forgot_password.email') }}</label>
-                <input id="email" type="email" autocomplete="username" required autofocus
-                       wire:model="email"
-                       class="mt-2 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-gray-900 focus:outline-none">
-                @error('email')
-                    <p class="mt-2 text-sm text-red-600" role="alert">{{ $message }}</p>
-                @enderror
-            </div>
+        <p class="mt-4 text-sm/5 text-body">{{ __('oidc::screens.forgot_password.intro') }}</p>
 
-            <button type="submit"
-                    class="w-full rounded-md bg-gray-900 px-4 py-2 font-medium text-white hover:bg-gray-800">
-                {{ __('oidc::screens.forgot_password.submit') }}
-            </button>
+        <form wire:submit="sendLink" class="mt-8 flex flex-col gap-6">
+            <x-oidc::field
+                name="email"
+                type="email"
+                :label="__('oidc::screens.forgot_password.email')"
+                :placeholder="__('oidc::screens.login.email_placeholder')"
+                autocomplete="username"
+                required
+                autofocus />
+
+            <x-oidc::button block>{{ __('oidc::screens.forgot_password.submit') }}</x-oidc::button>
         </form>
+
+        <x-oidc::link :href="route('login')" icon="chevron-left" class="mt-8">
+            {{ __('oidc::screens.forgot_password.back') }}
+        </x-oidc::link>
     @endif
 </div>

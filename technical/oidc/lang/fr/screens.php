@@ -9,6 +9,10 @@ return [
         'logo_alt' => 'DailyApps',
     ],
     'login' => [
+        'error_title' => 'Connexion refusée',
+        'email_placeholder' => 'vous@votre-organisation.fr',
+        'password_placeholder' => 'Votre mot de passe',
+        'support' => 'Un problème pour vous connecter ? Rapprochez-vous de l\'administrateur de votre organisation.',
         'title' => 'Connexion',
         'heading' => 'Connectez-vous',
         'email' => 'Adresse électronique',
@@ -18,6 +22,9 @@ return [
         'forgot' => 'Mot de passe oublié ?',
     ],
     'forgot_password' => [
+        'intro' => 'Indiquez l\'adresse de votre compte : vous recevrez un lien pour choisir un nouveau mot de passe.',
+        'sent_title' => 'Courriel envoyé',
+        'expiry_hint' => 'Le lien reste valable :minutes minutes et ne sert qu\'une fois.',
         'title' => 'Mot de passe oublié',
         'heading' => 'Réinitialiser votre mot de passe',
         'email' => 'Adresse électronique',
@@ -26,6 +33,9 @@ return [
         'back' => 'Revenir à la connexion',
     ],
     'reset_password' => [
+        'email' => 'Adresse électronique',
+        'password_placeholder' => 'Votre nouveau mot de passe',
+        'confirmation_placeholder' => 'Retapez le mot de passe',
         'title' => 'Nouveau mot de passe',
         'heading' => 'Choisissez un nouveau mot de passe',
         'password' => 'Nouveau mot de passe',
@@ -34,6 +44,9 @@ return [
         'invalid' => 'Ce lien de réinitialisation n\'est plus valable. Demandez-en un nouveau.',
     ],
     'invitation' => [
+        'password_placeholder' => 'Choisissez un mot de passe',
+        'confirmation_placeholder' => 'Retapez le mot de passe',
+        'expired_hint' => 'Cette invitation a une durée limitée : activez votre compte sans tarder.',
         'title' => 'Invitation',
         'heading' => 'Activez votre compte',
         'password' => 'Mot de passe',
@@ -42,6 +55,10 @@ return [
         'expired' => 'Cette invitation n\'est plus valable. Demandez-en une nouvelle.',
     ],
     'account' => [
+        'info_heading' => 'Informations',
+        'password_hint' => 'Au moins :min caractères, avec majuscules, minuscules, chiffres et symboles.',
+        'saved_title' => 'Profil enregistré',
+        'password_changed_title' => 'Mot de passe changé',
         'title' => 'Mon profil',
         'heading' => 'Mon profil',
         'name' => 'Nom',
