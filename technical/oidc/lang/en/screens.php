@@ -1,6 +1,13 @@
 <?php
 
 return [
+    'brand' => [
+        'headline' => 'One account for every application.',
+        'tagline' => 'Sign in once and find your whole workspace waiting.',
+        'invitation_headline' => 'Welcome aboard.',
+        'invitation_tagline' => 'Activate your account: it opens every application your organization uses.',
+        'logo_alt' => 'DailyApps',
+    ],
     'login' => [
         'title' => 'Sign in',
         'heading' => 'Sign in',

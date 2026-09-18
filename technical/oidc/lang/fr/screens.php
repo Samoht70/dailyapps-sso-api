@@ -1,6 +1,13 @@
 <?php
 
 return [
+    'brand' => [
+        'headline' => 'Un seul compte pour toutes vos applications.',
+        'tagline' => 'Connectez-vous une fois, retrouvez tout votre environnement de travail.',
+        'invitation_headline' => 'Bienvenue chez nous.',
+        'invitation_tagline' => 'Activez votre compte : il vous ouvre toutes les applications de votre organisation.',
+        'logo_alt' => 'DailyApps',
+    ],
     'login' => [
         'title' => 'Connexion',
         'heading' => 'Connectez-vous',
