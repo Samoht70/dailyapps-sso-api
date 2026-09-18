@@ -8,6 +8,14 @@ return [
         'invitation_tagline' => 'Activez votre compte : il vous ouvre toutes les applications de votre organisation.',
         'logo_alt' => 'DailyApps',
     ],
+    'link_expired' => [
+        'title' => 'Lien expiré',
+        'reset_heading' => 'Ce lien n\'est plus valable',
+        'invitation_heading' => 'Cette invitation n\'est plus valable',
+        'request_new' => 'Demander un nouveau lien',
+        'ask_administrator' => 'Rapprochez-vous de l\'administrateur de votre organisation : lui seul peut vous inviter à nouveau.',
+        'back' => 'Revenir à la connexion',
+    ],
     'login' => [
         'error_title' => 'Connexion refusée',
         'email_placeholder' => 'vous@votre-organisation.fr',

@@ -8,6 +8,14 @@ return [
         'invitation_tagline' => 'Activate your account: it opens every application your organization uses.',
         'logo_alt' => 'DailyApps',
     ],
+    'link_expired' => [
+        'title' => 'Link expired',
+        'reset_heading' => 'This link is no longer valid',
+        'invitation_heading' => 'This invitation is no longer valid',
+        'request_new' => 'Request a new link',
+        'ask_administrator' => 'Contact your organization administrator: only they can invite you again.',
+        'back' => 'Back to sign in',
+    ],
     'login' => [
         'error_title' => 'Sign-in refused',
         'email_placeholder' => 'you@your-organization.com',
